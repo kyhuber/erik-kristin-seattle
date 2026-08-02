@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seattle — August 2026 — For Erik &amp; Kristin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,900&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F1ECDF;
+    --paper-dim:#E7E0CD;
+    --paper-deep:#DCD3BB;
+    --ink:#2B2823;
+    --ink-soft:#5C564A;
+    --ink-faint:#8B8474;
+    --pine:#2F4A3C;
+    --slate:#4F6B7D;
+    --driftwood:#9C8C74;
+    --brass:#AD8730;
+    --cerulean:#356E97;
+    --blaze:#C1552B;
+    --muted-grey:#7D7669;
+    --rule: rgba(43,40,35,0.14);
+    --terrain-accent: var(--ink-soft);
+    --terrain-tint: rgba(43,40,35,0.05);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Source Serif 4', Georgia, serif;
+    font-size:17px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
+  }
+
+  h1,h2,h3{
+    font-family:'Fraunces', Georgia, serif;
+    font-weight:700;
+    line-height:1.08;
+    margin:0;
+    color:var(--ink);
+  }
+
+  .mono{
+    font-family:'JetBrains Mono', monospace;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+  }
+
+  a{color:inherit;}
+  button{font:inherit;}
+
+  :focus-visible{
+    outline:2px solid var(--blaze);
+    outline-offset:3px;
+  }
+
+  .wrap{
+    max-width:760px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:92vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    position:relative;
+    padding:80px 24px 60px;
+    background:
+      radial-gradient(ellipse at 15% 20%, rgba(47,74,60,0.10), transparent 55%),
+      radial-gradient(ellipse at 85% 75%, rgba(53,110,151,0.10), transparent 55%),
+      var(--paper);
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cg fill='none' stroke='%232B2823' stroke-opacity='0.05' stroke-width='1'%3E%3Cpath d='M-20,60 Q100,20 220,70 T460,50'/%3E%3Cpath d='M-20,140 Q100,100 220,150 T460,130'/%3E%3Cpath d='M-20,220 Q100,180 220,230 T460,210'/%3E%3Cpath d='M-20,300 Q100,260 220,310 T460,290'/%3E%3Cpath d='M-20,380 Q100,340 220,390 T460,370'/%3E%3C/g%3E%3C/svg%3E");
+    background-size:420px 420px;
+    pointer-events:none;
+  }
+  .hero-inner{max-width:640px; margin:0 auto; position:relative; z-index:1; text-align:center;}
+  .eyebrow{
+    font-size:13px;
+    color:var(--ink-soft);
+    margin-bottom:18px;
+  }
+  .hero h1{
+    font-size:clamp(2.6rem, 8vw, 4.4rem);
+    letter-spacing:-0.01em;
+  }
+  .hero h1 em{
+    font-style:italic;
+    font-weight:400;
+    color:var(--pine);
+  }
+  .hero-sub{
+    margin-top:16px;
+    font-size:1.15rem;
+    color:var(--ink-soft);
+  }
+  .hero-meta{
+    margin-top:34px;
+    display:flex;
+    justify-content:center;
+    gap:34px;
+    flex-wrap:wrap;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  .hero-meta strong{
+    display:block;
+    font-family:'Fraunces', Georgia, serif;
+    font-size:16px;
+    text-transform:none;
+    letter-spacing:0;
+    color:var(--ink);
+    margin-top:3px;
+    font-weight:600;
+  }
+  .weather-line{
+    margin-top:30px;
+    font-size:14px;
+    color:var(--ink-soft);
+  }
+  .scroll-cue{
+    margin-top:56px;
+    font-size:12px;
+    color:var(--ink-faint);
+  }
+
+  /* ---------- INTRO ---------- */
+  .intro{padding:70px 0 40px;}
+  .intro-thesis{
+    font-family:'Fraunces', Georgia, serif;
+    font-style:italic;
+    font-size:1.5rem;
+    color:var(--pine);
+    line-height:1.4;
+    margin-bottom:24px;
+  }
+  .intro p{
+    font-size:1.08rem;
+    color:var(--ink-soft);
+    max-width:60ch;
+  }
+  .collage{
+    display:grid;
+    grid-template-columns:1.3fr 1fr;
+    gap:12px;
+    margin:36px 0 8px;
+  }
+  .collage img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:2px;
+    display:block;
+  }
+  .collage-a{grid-row:span 2;}
+  .collage figure{margin:0; position:relative;}
+  .collage figcaption{
+    position:absolute; bottom:8px; left:10px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:10.5px;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    color:#fff;
+    text-shadow:0 1px 4px rgba(0,0,0,0.6);
+  }
+
+  /* ---------- SECTION HEADERS ---------- */
+  .section{padding:64px 0;}
+  .section-head{margin-bottom:36px;}
+  .section-eyebrow{
+    font-size:12.5px;
+    color:var(--blaze);
+    margin-bottom:10px;
+  }
+  .section h2{font-size:clamp(1.7rem, 5vw, 2.3rem);}
+  .rule{
+    height:1px;
+    background:var(--rule);
+    border:0;
+    margin:0;
+  }
+
+  /* ---------- ANCHORS ---------- */
+  .anchors-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(210px,1fr));
+    gap:18px;
+  }
+  .anchor-card{
+    background:var(--paper-dim);
+    border:1px solid var(--rule);
+    border-radius:3px;
+    padding:22px;
+  }
+  .anchor-icon{font-size:1.6rem; margin-bottom:12px; display:block;}
+  .anchor-card h3{font-size:1.05rem; margin-bottom:6px;}
+  .anchor-when{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    margin-bottom:10px;
+  }
+  .anchor-card p{margin:0; font-size:0.95rem; color:var(--ink-soft);}
+
+  /* ---------- DAYS / TERRAIN LEGEND ---------- */
+  .legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px 20px;
+    margin-bottom:34px;
+    font-size:12px;
+  }
+  .legend-item{display:flex; align-items:center; gap:7px; color:var(--ink-soft);}
+  .legend-dot{width:9px; height:9px; border-radius:50%; display:inline-block;}
+
+  .day[data-terrain="landmark"]{ --terrain-accent:var(--brass); --terrain-tint:rgba(173,135,48,0.08); }
+  .day[data-terrain="urban"]{ --terrain-accent:var(--slate); --terrain-tint:rgba(79,107,125,0.08); }
+  .day[data-terrain="water"]{ --terrain-accent:var(--cerulean); --terrain-tint:rgba(53,110,151,0.08); }
+  .day[data-terrain="wilderness"]{ --terrain-accent:var(--pine); --terrain-tint:rgba(47,74,60,0.10); }
+  .day[data-terrain="basecamp"]{ --terrain-accent:var(--driftwood); --terrain-tint:rgba(156,140,116,0.08); }
+  .day[data-terrain="departure"]{ --terrain-accent:var(--muted-grey); --terrain-tint:rgba(125,118,105,0.08); }
+
+  .day{
+    border:1px solid var(--rule);
+    border-left:4px solid var(--terrain-accent);
+    border-radius:2px;
+    margin-bottom:16px;
+    background:
+      linear-gradient(var(--terrain-tint), var(--terrain-tint)),
+      var(--paper);
+    overflow:hidden;
+  }
+  .day > summary{
+    list-style:none;
+    cursor:pointer;
+    padding:22px 24px;
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    align-items:center;
+    gap:18px;
+    position:relative;
+  }
+  .day > summary::-webkit-details-marker{display:none;}
+  .day > summary::after{
+    content:"+";
+    font-family:'JetBrains Mono', monospace;
+    font-size:20px;
+    color:var(--terrain-accent);
+    transition:transform 0.2s ease;
+  }
+  .day[open] > summary::after{transform:rotate(45deg);}
+  .waypoint{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.06em;
+    color:var(--terrain-accent);
+    white-space:nowrap;
+  }
+  .waypoint-num{
+    display:block;
+    font-size:22px;
+    font-weight:700;
+    letter-spacing:0;
+    color:var(--ink);
+    margin-top:2px;
+  }
+  .day-heading h3{font-size:1.25rem; margin-bottom:4px;}
+  .day-sub{font-size:0.92rem; color:var(--ink-soft);}
+  .terrain-tag{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    color:var(--terrain-accent);
+    border:1px solid var(--terrain-accent);
+    border-radius:20px;
+    padding:3px 9px;
+    display:inline-block;
+    margin-top:8px;
+  }
+  .day-body{
+    padding:0 24px 26px 24px;
+    border-top:1px solid var(--rule);
+    padding-top:20px;
+  }
+  .day-body ul{margin:0; padding:0; list-style:none;}
+  .day-body li{
+    padding:10px 0;
+    border-bottom:1px dashed var(--rule);
+    font-size:0.98rem;
+    display:flex;
+    gap:10px;
+  }
+  .day-body li:last-child{border-bottom:0;}
+  .day-time{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    color:var(--terrain-accent);
+    min-width:74px;
+    padding-top:2px;
+  }
+  .status-pill{
+    font-family:'JetBrains Mono', monospace;
+    font-size:9.5px;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    padding:2px 7px;
+    border-radius:3px;
+    margin-left:6px;
+    vertical-align:middle;
+  }
+  .status-open{background:rgba(193,85,43,0.15); color:var(--blaze);}
+  .status-confirmed{background:rgba(47,74,60,0.13); color:var(--pine);}
+  .live-fact{
+    margin-top:16px;
+    padding:12px 14px;
+    background:var(--paper-dim);
+    border-radius:3px;
+    font-size:0.9rem;
+    color:var(--ink-soft);
+  }
+  .live-fact strong{color:var(--ink);}
+
+  /* topo texture per terrain, drawn via inline svg in markup */
+  .contour{
+    position:absolute; right:16px; top:16px;
+    opacity:0.5;
+    width:70px; height:44px;
+    pointer-events:none;
+  }
+
+  /* ---------- OPEN QUESTIONS ---------- */
+  .question-card{
+    background:var(--paper-dim);
+    border:1px solid var(--rule);
+    border-radius:3px;
+    padding:26px;
+    margin-bottom:20px;
+  }
+  .question-card h3{font-size:1.1rem; margin-bottom:16px;}
+  .options{display:flex; flex-direction:column; gap:10px;}
+  .opt-btn{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    background:var(--paper);
+    border:1px solid var(--rule);
+    border-radius:3px;
+    padding:13px 16px;
+    text-align:left;
+    cursor:pointer;
+    transition:border-color 0.15s ease, background 0.15s ease;
+  }
+  .opt-btn:hover{border-color:var(--blaze);}
+  .opt-btn.picked{
+    border-color:var(--blaze);
+    background:rgba(193,85,43,0.08);
+  }
+  .opt-label{font-size:0.96rem;}
+  .opt-count{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    color:var(--ink-faint);
+    white-space:nowrap;
+  }
+  .opt-btn.picked .opt-count{color:var(--blaze);}
+  .q-progress{
+    margin-top:18px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    color:var(--ink-faint);
+    text-align:right;
+  }
+
+  /* ---------- OPTIONAL ADVENTURES ---------- */
+  .filters{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:28px;
+  }
+  .filter-btn{
+    background:transparent;
+    border:1px solid var(--rule);
+    border-radius:20px;
+    padding:7px 15px;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    cursor:pointer;
+  }
+  .filter-btn.active{
+    background:var(--ink);
+    border-color:var(--ink);
+    color:var(--paper);
+  }
+  .adv-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(240px,1fr));
+    gap:16px;
+  }
+  .adv-card{
+    background:var(--paper-dim);
+    border:1px solid var(--rule);
+    border-radius:3px;
+    padding:20px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .adv-top{display:flex; justify-content:space-between; align-items:flex-start; gap:10px;}
+  .adv-icon{font-size:1.5rem;}
+  .adv-card h4{font-family:'Fraunces',serif; font-size:1.05rem; font-weight:600; margin:0;}
+  .adv-card p{margin:0; font-size:0.92rem; color:var(--ink-soft); flex-grow:1;}
+  .adv-tags{display:flex; gap:6px; flex-wrap:wrap;}
+  .tag{
+    font-family:'JetBrains Mono', monospace;
+    font-size:9.5px;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    border:1px solid var(--rule);
+    border-radius:20px;
+    padding:2px 8px;
+  }
+  .add-btn{
+    align-self:flex-start;
+    margin-top:6px;
+    background:none;
+    border:1px solid var(--ink);
+    color:var(--ink);
+    border-radius:20px;
+    padding:6px 14px;
+    font-size:12px;
+    cursor:pointer;
+  }
+  .add-btn.added{
+    background:var(--pine);
+    border-color:var(--pine);
+    color:var(--paper);
+  }
+  .shortlist-box{
+    margin-top:30px;
+    padding:18px 20px;
+    border-top:1px solid var(--rule);
+    font-size:0.95rem;
+    color:var(--ink-soft);
+  }
+  .shortlist-box strong{color:var(--ink);}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    padding:70px 24px 60px;
+    text-align:center;
+    color:var(--ink-faint);
+    font-size:13px;
+  }
+  footer .dedication{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:1.2rem;
+    color:var(--pine);
+    margin-bottom:14px;
+  }
+
+  @media (max-width:600px){
+    .hero{min-height:80vh; padding:60px 20px 40px;}
+    .collage{grid-template-columns:1fr;}
+    .collage-a{grid-row:auto;}
+    .day > summary{grid-template-columns:auto 1fr; row-gap:8px;}
+    .day > summary::after{grid-row:1; grid-column:2; justify-self:end;}
+    .contour{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow mono">A field guide, of sorts</div>
+    <h1>Seattle <em>for Erik &amp; Kristin</em></h1>
+    <p class="hero-sub">Six days. One coastline. Kristin's first look at the West Coast.</p>
+    <div class="hero-meta">
+      <div>Arrive<strong>Aug 6</strong></div>
+      <div>Depart<strong>Aug 11</strong></div>
+      <div>Base camp<strong>West Seattle</strong></div>
+    </div>
+    <div class="weather-line" id="weather-line">🌤 Seattle right now — loading… · August is Seattle's driest month, so expect the good stuff</div>
+    <div class="scroll-cue mono">↓ scroll</div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="intro">
+    <p class="intro-thesis">"You've heard about it for years. Now you get to see it."</p>
+    <p>This isn't a tourist itinerary — it's six days of actual terrain: a ballgame, a coastline, a neighborhood art walk, and enough open road in between to just be here. Erik, welcome back. Kristin, welcome to the West Coast for the first time — let's cover some ground.</p>
+    <div class="collage">
+      <figure class="collage-a">
+        <img src="https://images.unsplash.com/photo-1575369422538-94d6e04c2571?w=700&q=80" alt="Alki Beach, West Seattle">
+        <figcaption>Alki Beach</figcaption>
+      </figure>
+      <figure>
+        <img src="https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=500&q=80" alt="Seattle skyline">
+        <figcaption>Seattle</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" id="anchors">
+    <div class="section-head">
+      <div class="section-eyebrow mono">The anchors</div>
+      <h2>What's already locked in</h2>
+    </div>
+    <div class="anchors-grid">
+      <div class="anchor-card">
+        <span class="anchor-icon">⚾</span>
+        <h3>Mariners Game</h3>
+        <div class="anchor-when mono">Thu · First pitch 1:10 PM</div>
+        <p>Straight off the plane and into the stands at T-Mobile Park.</p>
+      </div>
+      <div class="anchor-card">
+        <span class="anchor-icon">🔮</span>
+        <h3>Chihuly Garden &amp; Glass</h3>
+        <div class="anchor-when mono">Fri · Daytime</div>
+        <p>Dale Chihuly's glass collection near the Space Needle. Erik's call — Kristin has to see it.</p>
+      </div>
+      <div class="anchor-card">
+        <span class="anchor-icon">🎨</span>
+        <h3>Highland Park First Friday</h3>
+        <div class="anchor-when mono">Fri · ~5:30–8:30 PM</div>
+        <p>The neighborhood art walk. Kyle's actual backyard, on its best night of the month.</p>
+      </div>
+      <div class="anchor-card">
+        <span class="anchor-icon">🥾</span>
+        <h3>Toleak Point Backpacking</h3>
+        <div class="anchor-when mono">Sun–Mon · Overnight</div>
+        <p>Third Beach to Toleak Point. Boots on, phones off, Olympic coast wilderness.</p>
+      </div>
+      <div class="anchor-card">
+        <span class="anchor-icon">🎳</span>
+        <h3>Unlimited Free Bowling</h3>
+        <div class="anchor-when mono">Any day · Not after 5 PM Fri/Sat</div>
+        <p>West Seattle Bowl perk — free and unlimited, so it's basically a Monday activity.</p>
+      </div>
+      <div class="anchor-card">
+        <span class="anchor-icon">⛵</span>
+        <h3>Sailing, Puget Sound</h3>
+        <div class="anchor-when mono">Sat · Afternoon</div>
+        <p>Part of a packed Saturday — garden party, concert, then out on the water.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section class="section" id="week">
+    <div class="section-head">
+      <div class="section-eyebrow mono">Day by day</div>
+      <h2>The Week, by Terrain</h2>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item"><span class="legend-dot" style="background:var(--brass)"></span>Landmark</div>
+      <div class="legend-item"><span class="legend-dot" style="background:var(--slate)"></span>Urban</div>
+      <div class="legend-item"><span class="legend-dot" style="background:var(--cerulean)"></span>Water</div>
+      <div class="legend-item"><span class="legend-dot" style="background:var(--pine)"></span>Wilderness</div>
+      <div class="legend-item"><span class="legend-dot" style="background:var(--driftwood)"></span>Basecamp</div>
+      <div class="legend-item"><span class="legend-dot" style="background:var(--muted-grey)"></span>Departure</div>
+    </div>
+
+    <!-- THURSDAY -->
+    <details class="day" data-terrain="landmark" open>
+      <summary>
+        <div class="waypoint mono">Thu · Aug 6<span class="waypoint-num">01</span></div>
+        <div class="day-heading">
+          <h3>Play Ball</h3>
+          <div class="day-sub">Straight off the plane and into the stands.</div>
+          <span class="terrain-tag">Landmark</span>
+        </div>
+      </summary>
+      <div class="day-body">
+        <ul>
+          <li><span class="day-time mono">11:29 AM</span> Land at SEA — bags, car, quick turnaround</li>
+          <li><span class="day-time mono">1:10 PM</span> Mariners game, T-Mobile Park <span class="status-pill status-confirmed">Confirmed</span></li>
+          <li><span class="day-time mono">Evening</span> Open — disc golf at Lakewood is on the table <span class="status-pill status-open">Open question ↓</span></li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- FRIDAY -->
+    <details class="day" data-terrain="urban">
+      <summary>
+        <div class="waypoint mono">Fri · Aug 7<span class="waypoint-num">02</span></div>
+        <div class="day-heading">
+          <h3>Glass and Grid</h3>
+          <div class="day-sub">A hand with setup, then glass — Highland Park by night.</div>
+          <span class="terrain-tag">Urban</span>
+        </div>
+      </summary>
+      <div class="day-body">
+        <ul>
+          <li><span class="day-time mono">Morning</span> First Friday site setup, ~1 hour <span class="status-pill status-confirmed">Confirmed</span></li>
+          <li><span class="day-time mono">Daytime</span> Chihuly Garden &amp; Glass <span class="status-pill status-confirmed">Confirmed</span></li>
+          <li><span class="day-time mono">Daytime</span> Otherwise: unstructured, on purpose — wander, coffee, no agenda</li>
+          <li><span class="day-time mono">5:30 PM</span> Highland Park First Friday <span class="status-pill status-confirmed">Confirmed</span></li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- SATURDAY -->
+    <details class="day" data-terrain="water">
+      <summary>
+        <div class="waypoint mono">Sat · Aug 8<span class="waypoint-num">03</span></div>
+        <div class="day-heading">
+          <h3>Party, Show, Sound</h3>
+          <div class="day-sub">All three — garden party, concert, and sailing.</div>
+          <span class="terrain-tag">Water</span>
+        </div>
+      </summary>
+      <div class="day-body">
+        <ul>
+          <li><span class="day-time mono">~1 PM</span> AJ's garden party <span class="status-pill status-confirmed">Confirmed</span></li>
+          <li><span class="day-time mono">~2 PM</span> Beef's Prime Cuts concert <span class="status-pill status-confirmed">Confirmed</span></li>
+          <li><span class="day-time mono">Afternoon</span> Sailing on Puget Sound <span class="status-pill status-confirmed">Confirmed</span></li>
+          <li><span class="day-time mono">Evening</span> Open — what happens after sailing is the one real question left <span class="status-pill status-open">Open question ↓</span></li>
+        </ul>
+        <div class="live-fact">Heads up: the garden party (~1–3) and concert (~2–5) overlap by about an hour — reads like a catch-part-of-each plan before heading out on the water, which is fine if that's the intent.</div>
+      </div>
+    </details>
+
+    <!-- SUNDAY -->
+    <details class="day" data-terrain="wilderness">
+      <summary>
+        <div class="waypoint mono">Sun · Aug 9<span class="waypoint-num">04</span></div>
+        <div class="day-heading">
+          <h3>Third Beach to Toleak Point</h3>
+          <div class="day-sub">Olympic coast. Boots on, phones off.</div>
+          <span class="terrain-tag">Wilderness</span>
+        </div>
+      </summary>
+      <div class="day-body">
+        <ul>
+          <li><span class="day-time mono">Morning</span> Drive to Third Beach trailhead</li>
+          <li><span class="day-time mono">Daytime</span> Hike in, make camp at Toleak Point <span class="status-pill status-confirmed">Confirmed</span></li>
+          <li><span class="day-time mono">Overnight</span> On the coast</li>
+        </ul>
+        <div class="live-fact" id="sunset-fact">🌅 Sunset at La Push — loading…</div>
+      </div>
+    </details>
+
+    <!-- MONDAY -->
+    <details class="day" data-terrain="basecamp">
+      <summary>
+        <div class="waypoint mono">Mon · Aug 10<span class="waypoint-num">05</span></div>
+        <div class="day-heading">
+          <h3>Back to Basecamp</h3>
+          <div class="day-sub">Sore legs, then the landscape architect.</div>
+          <span class="terrain-tag">Basecamp</span>
+        </div>
+      </summary>
+      <div class="day-body">
+        <ul>
+          <li><span class="day-time mono">Midday</span> Hike out, drive back to West Seattle</li>
+          <li><span class="day-time mono">Before 4</span> Open, deliberately low-key — free bowling could fit if there's time</li>
+          <li><span class="day-time mono">4:00 PM</span> Landscape architect <span class="status-pill status-confirmed">Confirmed</span></li>
+          <li><span class="day-time mono">After 4</span> Nothing. On purpose.</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- TUESDAY -->
+    <details class="day" data-terrain="departure">
+      <summary>
+        <div class="waypoint mono">Tue · Aug 11<span class="waypoint-num">06</span></div>
+        <div class="day-heading">
+          <h3>Wheels Up</h3>
+          <div class="day-sub">One more coffee, then the airport.</div>
+          <span class="terrain-tag">Departure</span>
+        </div>
+      </summary>
+      <div class="day-body">
+        <ul>
+          <li><span class="day-time mono">Morning</span> Coffee, slow, no rush</li>
+          <li><span class="day-time mono">11:45 AM</span> Depart SEA <span class="status-pill status-confirmed">Confirmed</span></li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <hr class="rule">
+
+  <section class="section" id="open-questions">
+    <div class="section-head">
+      <div class="section-eyebrow mono">Your input needed</div>
+      <h2>One Open Question</h2>
+      <p style="color:var(--ink-soft); margin-top:10px;">Everything else is sorted. This one's genuinely up to you.</p>
+    </div>
+
+    <div class="question-card">
+      <h3>Saturday evening, after sailing — what sounds good?</h3>
+      <div class="options" data-question="saturday-evening">
+        <button class="opt-btn" data-option="Dinner party at the house"><span class="opt-label">🍽️ Dinner party at the house</span><span class="opt-count mono">0</span></button>
+        <button class="opt-btn" data-option="Karaoke at Ba Bar"><span class="opt-label">🎤 Karaoke at Ba Bar</span><span class="opt-count mono">0</span></button>
+        <button class="opt-btn" data-option="Pool at Triangle"><span class="opt-label">🎱 Pool at Triangle</span><span class="opt-count mono">0</span></button>
+        <button class="opt-btn" data-option="Not sure yet"><span class="opt-label">🤷 Not sure yet</span><span class="opt-count mono">0</span></button>
+      </div>
+    </div>
+
+    <div class="q-progress mono" id="q-progress">0 of 1 answered</div>
+  </section>
+
+  <hr class="rule">
+
+  <section class="section" id="adventures">
+    <div class="section-head">
+      <div class="section-eyebrow mono">When the schedule is open</div>
+      <h2>Optional Adventures</h2>
+      <p style="color:var(--ink-soft); margin-top:10px;">Click anything that sounds good — I'll take note.</p>
+    </div>
+
+    <div class="filters" id="filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="outdoor">Outdoor</button>
+      <button class="filter-btn" data-filter="indoor">Indoor</button>
+      <button class="filter-btn" data-filter="active">Active</button>
+      <button class="filter-btn" data-filter="mellow">Mellow</button>
+      <button class="filter-btn" data-filter="food">Food &amp; Drink</button>
+    </div>
+
+    <div class="adv-grid" id="adv-grid">
+
+      <div class="adv-card" data-tags="outdoor active">
+        <div class="adv-top"><span class="adv-icon">🥏</span></div>
+        <h4>Disc Golf, Lakewood</h4>
+        <p>A classic with Kyle's brother. King County's got the course.</p>
+        <div class="adv-tags"><span class="tag">Outdoor</span><span class="tag">Active</span></div>
+        <button class="add-btn">+ Add to shortlist</button>
+      </div>
+
+      <div class="adv-card" data-tags="indoor mellow">
+        <div class="adv-top"><span class="adv-icon">🎳</span></div>
+        <h4>Bowling, West Seattle Bowl</h4>
+        <p>Free and unlimited on the Kyle plan. Monday's the natural fit.</p>
+        <div class="adv-tags"><span class="tag">Indoor</span><span class="tag">Mellow</span></div>
+        <button class="add-btn">+ Add to shortlist</button>
+      </div>
+
+      <div class="adv-card" data-tags="indoor active">
+        <div class="adv-top"><span class="adv-icon">⛸️</span></div>
+        <h4>Roller Skating, Southgate</h4>
+        <p>Five minutes from home. Laces optional, dignity optional.</p>
+        <div class="adv-tags"><span class="tag">Indoor</span><span class="tag">Active</span></div>
+        <button class="add-btn">+ Add to shortlist</button>
+      </div>
+
+      <div class="adv-card" data-tags="outdoor mellow">
+        <div class="adv-top"><span class="adv-icon">🏖️</span></div>
+        <h4>Alki Beach Walk</h4>
+        <p>Where Logan's place is, and where the city meets the Sound.</p>
+        <div class="adv-tags"><span class="tag">Outdoor</span><span class="tag">Mellow</span></div>
+        <button class="add-btn">+ Add to shortlist</button>
+      </div>
+
+      <div class="adv-card" data-tags="outdoor mellow">
+        <div class="adv-top"><span class="adv-icon">🌲</span></div>
+        <h4>Lincoln Park</h4>
+        <p>West Seattle's best-kept secret — bluff, forest, beach, ten minutes out.</p>
+        <div class="adv-tags"><span class="tag">Outdoor</span><span class="tag">Mellow</span></div>
+        <button class="add-btn">+ Add to shortlist</button>
+      </div>
+
+      <div class="adv-card" data-tags="food mellow">
+        <div class="adv-top"><span class="adv-icon">☕</span></div>
+        <h4>Coffee Crawl</h4>
+        <p>Seattle's coffee culture, done properly — a few real stops, no chains.</p>
+        <div class="adv-tags"><span class="tag">Food &amp; Drink</span><span class="tag">Mellow</span></div>
+        <button class="add-btn">+ Add to shortlist</button>
+      </div>
+
+      <div class="adv-card" data-tags="indoor food mellow">
+        <div class="adv-top"><span class="adv-icon">🍽️</span></div>
+        <h4>Dinner Party at the House</h4>
+        <p>The renovated kitchen, put to use. No fixed night — whenever it fits.</p>
+        <div class="adv-tags"><span class="tag">Indoor</span><span class="tag">Food &amp; Drink</span></div>
+        <button class="add-btn">+ Add to shortlist</button>
+      </div>
+
+      <div class="adv-card" data-tags="indoor active food">
+        <div class="adv-top"><span class="adv-icon">🎤</span></div>
+        <h4>Karaoke, Ba Bar or Elsewhere</h4>
+        <p>West Seattle's got options — this one's flexible on venue.</p>
+        <div class="adv-tags"><span class="tag">Indoor</span><span class="tag">Active</span></div>
+        <button class="add-btn">+ Add to shortlist</button>
+      </div>
+
+      <div class="adv-card" data-tags="indoor mellow food">
+        <div class="adv-top"><span class="adv-icon">🎱</span></div>
+        <h4>Pool at Triangle</h4>
+        <p>West Seattle dive bar classic. Low-key, no pressure.</p>
+        <div class="adv-tags"><span class="tag">Indoor</span><span class="tag">Mellow</span></div>
+        <button class="add-btn">+ Add to shortlist</button>
+      </div>
+
+      <div class="adv-card" data-tags="outdoor active">
+        <div class="adv-top"><span class="adv-icon">🏄</span></div>
+        <h4>Paddleboarding</h4>
+        <p>Puget Sound from a different angle. Weather- and energy-dependent.</p>
+        <div class="adv-tags"><span class="tag">Outdoor</span><span class="tag">Active</span></div>
+        <button class="add-btn">+ Add to shortlist</button>
+      </div>
+
+    </div>
+
+    <div class="shortlist-box"><strong>Your shortlist:</strong> <span id="shortlist-text">nothing yet — click a card above</span></div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="dedication">For Erik &amp; Kristin.</div>
+  Made with care in West Seattle · August 2026
+</footer>
+
+<script>
+  // ---------- LIVE WEATHER (Seattle) ----------
+  (function(){
+    const el = document.getElementById('weather-line');
+    fetch('https://api.open-meteo.com/v1/forecast?latitude=47.6062&longitude=-122.3321&current=temperature_2m,weather_code&temperature_unit=fahrenheit&timezone=America%2FLos_Angeles')
+      .then(r => r.json())
+      .then(data => {
+        const c = data.current;
+        const emoji = weatherEmoji(c.weather_code);
+        el.textContent = `${emoji} Seattle right now — ${Math.round(c.temperature_2m)}°F · August is Seattle's driest month, so expect the good stuff`;
+      })
+      .catch(() => {
+        el.textContent = "🌤 Seattle, WA · August is Seattle's driest month, so expect the good stuff";
+      });
+
+    function weatherEmoji(code){
+      if (code === 0) return '☀️';
+      if ([1,2,3].includes(code)) return '⛅';
+      if ([45,48].includes(code)) return '🌫️';
+      if ([51,53,55,56,57,61,63,65,80,81,82].includes(code)) return '🌧️';
+      if ([71,73,75,77,85,86].includes(code)) return '🌨️';
+      if ([95,96,99].includes(code)) return '⛈️';
+      return '🌤';
+    }
+  })();
+
+  // ---------- SUNSET AT LA PUSH (Sunday flagship day) ----------
+  (function(){
+    const el = document.getElementById('sunset-fact');
+    fetch('https://api.open-meteo.com/v1/forecast?latitude=47.9046&longitude=-124.6329&daily=sunset&timezone=America%2FLos_Angeles')
+      .then(r => r.json())
+      .then(data => {
+        const raw = data.daily.sunset[0];
+        const t = new Date(raw);
+        const time = t.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+        el.innerHTML = `🌅 Sunset at La Push — <strong>${time}</strong>. Plan camp before then.`;
+      })
+      .catch(() => {
+        el.textContent = '🌅 Sunset at La Push — check conditions before you go; coastal weather shifts fast.';
+      });
+  })();
+
+  // ---------- OPEN QUESTIONS ----------
+  (function(){
+    const groups = document.querySelectorAll('.options');
+    const progress = document.getElementById('q-progress');
+    const answered = {};
+
+    groups.forEach(group => {
+      const qid = group.dataset.question;
+      const counts = {};
+      group.querySelectorAll('.opt-btn').forEach(btn => counts[btn.dataset.option] = 0);
+
+      group.addEventListener('click', (e) => {
+        const btn = e.target.closest('.opt-btn');
+        if (!btn) return;
+        group.querySelectorAll('.opt-btn').forEach(b => {
+          b.classList.remove('picked');
+        });
+        btn.classList.add('picked');
+        counts[btn.dataset.option] = 1;
+        group.querySelectorAll('.opt-btn').forEach(b => {
+          const isPicked = b === btn;
+          b.querySelector('.opt-count').textContent = isPicked ? '1' : '0';
+        });
+        answered[qid] = true;
+        progress.textContent = `${Object.keys(answered).length} of ${groups.length} answered`;
+      });
+    });
+  })();
+
+  // ---------- OPTIONAL ADVENTURES: FILTER + SHORTLIST ----------
+  (function(){
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.adv-card');
+    const shortlistText = document.getElementById('shortlist-text');
+    const shortlist = new Set();
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const f = btn.dataset.filter;
+        cards.forEach(card => {
+          const tags = card.dataset.tags.split(' ');
+          card.style.display = (f === 'all' || tags.includes(f)) ? '' : 'none';
+        });
+      });
+    });
+
+    cards.forEach(card => {
+      const addBtn = card.querySelector('.add-btn');
+      const name = card.querySelector('h4').textContent;
+      addBtn.addEventListener('click', () => {
+        if (shortlist.has(name)) {
+          shortlist.delete(name);
+          addBtn.classList.remove('added');
+          addBtn.textContent = '+ Add to shortlist';
+        } else {
+          shortlist.add(name);
+          addBtn.classList.add('added');
+          addBtn.textContent = '✓ Added';
+        }
+        shortlistText.textContent = shortlist.size ? Array.from(shortlist).join(', ') : 'nothing yet — click a card above';
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
