@@ -275,6 +275,79 @@
     background:var(--terrain-accent);
     box-shadow:0 0 0 3px var(--paper);
   }
+
+  /* ---------- DAY TABS (tab mode, JS only) ---------- */
+  .day-tabs{display:none;}
+  .js .day-tabs{
+    display:flex;
+    align-items:stretch;
+    position:relative;
+    margin-bottom:26px;
+    overflow-x:auto;
+    scrollbar-width:none;
+  }
+  .day-tabs::-webkit-scrollbar{display:none;}
+  .day-tabs::before{
+    content:"";
+    position:absolute;
+    left:28px; right:28px; top:6px;
+    border-top:2px dashed rgba(43,40,35,0.22);
+  }
+  .day-tab{
+    flex:1 1 0;
+    min-width:56px;
+    background:none;
+    border:0;
+    padding:0 4px 8px;
+    cursor:pointer;
+    color:var(--ink-faint);
+    position:relative;
+  }
+  .day-tab .dot{
+    display:block;
+    width:13px; height:13px;
+    border-radius:50%;
+    background:var(--td);
+    margin:0 auto 8px;
+    box-shadow:0 0 0 3px var(--paper);
+    transition:transform 0.15s ease;
+  }
+  .day-tab .lbl{font-size:11px;}
+  .day-tab:hover{color:var(--ink-soft);}
+  .day-tab.active{color:var(--ink);}
+  .day-tab.active .dot{transform:scale(1.4);}
+  .day-tab.active .lbl{font-weight:700;}
+
+  /* in tab mode: hide the vertical spine, show one day at a time */
+  .js .trail{padding-left:0;}
+  .js .trail::before{display:none;}
+  .js .day::before{display:none;}
+  .js .day{display:none;}
+  .js .day.active-day{display:block; animation:dayIn 0.35s ease;}
+  .js .day > summary{pointer-events:none;}
+  .js .day > summary::after{display:none;}
+  @keyframes dayIn{
+    from{opacity:0; transform:translateY(8px);}
+    to{opacity:1; transform:none;}
+  }
+
+  .day-pager{display:none;}
+  .js .day-pager{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    margin-top:4px;
+  }
+  .pager-btn{
+    background:none;
+    border:1px solid var(--rule);
+    border-radius:20px;
+    padding:7px 15px;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    cursor:pointer;
+  }
+  .pager-btn:hover{border-color:var(--ink); color:var(--ink);}
   .day > summary{
     list-style:none;
     cursor:pointer;
@@ -692,6 +765,15 @@
       <div class="legend-item"><span class="legend-dot" style="background:var(--muted-grey)"></span>Departure</div>
     </div>
 
+    <div class="day-tabs" role="tablist" aria-label="Pick a day">
+      <button class="day-tab mono" role="tab" data-target="day-thu" style="--td:var(--brass)" aria-selected="false"><span class="dot"></span><span class="lbl">Thu</span></button>
+      <button class="day-tab mono" role="tab" data-target="day-fri" style="--td:var(--slate)" aria-selected="false"><span class="dot"></span><span class="lbl">Fri</span></button>
+      <button class="day-tab mono" role="tab" data-target="day-sat" style="--td:var(--cerulean)" aria-selected="false"><span class="dot"></span><span class="lbl">Sat</span></button>
+      <button class="day-tab mono" role="tab" data-target="day-sun" style="--td:var(--pine)" aria-selected="false"><span class="dot"></span><span class="lbl">Sun</span></button>
+      <button class="day-tab mono" role="tab" data-target="day-mon" style="--td:var(--driftwood)" aria-selected="false"><span class="dot"></span><span class="lbl">Mon</span></button>
+      <button class="day-tab mono" role="tab" data-target="day-tue" style="--td:var(--muted-grey)" aria-selected="false"><span class="dot"></span><span class="lbl">Tue</span></button>
+    </div>
+
     <div class="trail">
 
     <!-- THURSDAY -->
@@ -825,6 +907,8 @@
     </details>
 
     </div>
+
+    <div class="day-pager" id="day-pager"></div>
   </section>
 
   <hr class="rule">
@@ -982,27 +1066,71 @@
     }
 
     const nav = document.getElementById('day-nav');
-    const links = Array.from(nav.querySelectorAll('a'));
+    const navLinks = Array.from(nav.querySelectorAll('a'));
+    const days = Array.from(document.querySelectorAll('.trail details.day'));
+    const tabs = Array.from(document.querySelectorAll('.day-tab'));
+    const pager = document.getElementById('day-pager');
+    const linkById = {};
+    navLinks.forEach(a => linkById[a.getAttribute('href').slice(1)] = a);
 
+    let currentDay = (days.find(d => d.open) || days[0]).id;
+
+    function highlightNav(id){
+      navLinks.forEach(l => l.classList.remove('active'));
+      if (linkById[id]) linkById[id].classList.add('active');
+    }
+
+    function setDay(id, scrollTo){
+      currentDay = id;
+      days.forEach(d => {
+        const on = d.id === id;
+        d.classList.toggle('active-day', on);
+        if (on) d.open = true;
+      });
+      tabs.forEach(t => {
+        const on = t.dataset.target === id;
+        t.classList.toggle('active', on);
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      const i = days.findIndex(d => d.id === id);
+      const prev = days[i - 1], next = days[i + 1];
+      pager.innerHTML =
+        (prev ? '<button class="pager-btn" data-target="' + prev.id + '">&larr; ' + prev.querySelector('h3').textContent + '</button>' : '<span></span>') +
+        (next ? '<button class="pager-btn" data-target="' + next.id + '">' + next.querySelector('h3').textContent + ' &rarr;</button>' : '<span></span>');
+      highlightNav(id);
+      if (scrollTo) document.getElementById('week').scrollIntoView({behavior:'smooth'});
+    }
+
+    // tab mode shows one day at a time; skip the reveal animation for days
+    days.forEach(d => d.classList.add('in'));
+    tabs.forEach(t => t.addEventListener('click', () => setDay(t.dataset.target, false)));
+    pager.addEventListener('click', (e) => {
+      const b = e.target.closest('.pager-btn');
+      if (b) setDay(b.dataset.target, false);
+    });
     nav.addEventListener('click', (e) => {
       const a = e.target.closest('a');
       if (!a) return;
-      const target = document.querySelector(a.getAttribute('href'));
-      if (target && target.tagName === 'DETAILS') target.open = true;
+      const id = a.getAttribute('href').slice(1);
+      if (id.indexOf('day-') === 0) {
+        e.preventDefault();
+        setDay(id, true);
+      }
     });
+    setDay(currentDay, false);
 
-    const byId = {};
-    links.forEach(a => byId[a.getAttribute('href').slice(1)] = a);
-    const targets = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+    // section spy: track which stretch of the page is in view
+    const spyMap = {
+      'week': () => highlightNav(currentDay),
+      'open-questions': () => highlightNav('open-questions'),
+      'adventures': () => highlightNav('adventures')
+    };
     const so = new IntersectionObserver((entries) => {
       entries.forEach(en => {
-        if (en.isIntersecting) {
-          links.forEach(l => l.classList.remove('active'));
-          byId[en.target.id].classList.add('active');
-        }
+        if (en.isIntersecting && spyMap[en.target.id]) spyMap[en.target.id]();
       });
     }, {rootMargin:'-15% 0px -70% 0px'});
-    targets.forEach(t => so.observe(t));
+    Object.keys(spyMap).forEach(id => so.observe(document.getElementById(id)));
   })();
 
   // ---------- LIVE WEATHER (Seattle) ----------
