@@ -73,7 +73,7 @@
 
   /* ---------- HERO ---------- */
   .hero{
-    min-height:92vh;
+    min-height:70vh;
     display:flex;
     flex-direction:column;
     justify-content:center;
@@ -187,7 +187,7 @@
   }
 
   /* ---------- SECTION HEADERS ---------- */
-  .section{padding:64px 0;}
+  .section{padding:48px 0; scroll-margin-top:60px;}
   .section-head{margin-bottom:36px;}
   .section-eyebrow{
     font-size:12.5px;
@@ -245,6 +245,7 @@
   .day[data-terrain="departure"]{ --terrain-accent:var(--muted-grey); --terrain-tint:rgba(125,118,105,0.08); }
 
   .day{
+    position:relative;
     border:1px solid var(--rule);
     border-left:4px solid var(--terrain-accent);
     border-radius:2px;
@@ -252,7 +253,27 @@
     background:
       linear-gradient(var(--terrain-tint), var(--terrain-tint)),
       var(--paper);
-    overflow:hidden;
+    scroll-margin-top:70px;
+    transition:box-shadow 0.18s ease;
+  }
+  .day:hover{box-shadow:0 6px 18px rgba(43,40,35,0.08);}
+
+  /* trail spine connecting the days */
+  .trail{position:relative; padding-left:26px;}
+  .trail::before{
+    content:"";
+    position:absolute;
+    left:6px; top:14px; bottom:14px;
+    border-left:2px dashed rgba(43,40,35,0.22);
+  }
+  .day::before{
+    content:"";
+    position:absolute;
+    left:-24.5px; top:28px;
+    width:11px; height:11px;
+    border-radius:50%;
+    background:var(--terrain-accent);
+    box-shadow:0 0 0 3px var(--paper);
   }
   .day > summary{
     list-style:none;
@@ -307,6 +328,14 @@
     border-top:1px solid var(--rule);
     padding-top:20px;
   }
+  .day-photo{
+    width:calc(100% + 48px);
+    margin:-20px -24px 18px;
+    height:160px;
+    object-fit:cover;
+    display:block;
+    border-radius:0 2px 0 0;
+  }
   .day-body ul{margin:0; padding:0; list-style:none;}
   .day-body li{
     padding:10px 0;
@@ -347,10 +376,66 @@
 
   /* topo texture per terrain, drawn via inline svg in markup */
   .contour{
-    position:absolute; right:16px; top:16px;
-    opacity:0.5;
+    position:absolute; right:54px; top:16px;
+    opacity:0.45;
     width:70px; height:44px;
     pointer-events:none;
+    color:var(--terrain-accent);
+  }
+
+  /* ---------- STICKY DAY NAV ---------- */
+  .day-nav{
+    position:sticky;
+    top:0;
+    z-index:60;
+    background:rgba(241,236,223,0.92);
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--rule);
+  }
+  .day-nav-inner{
+    max-width:760px;
+    margin:0 auto;
+    padding:9px 24px;
+    display:flex;
+    align-items:center;
+    gap:4px;
+    overflow-x:auto;
+    scrollbar-width:none;
+    font-size:11.5px;
+  }
+  .day-nav-inner::-webkit-scrollbar{display:none;}
+  .day-nav a{
+    text-decoration:none;
+    padding:5px 12px;
+    border-radius:20px;
+    color:var(--ink-soft);
+    white-space:nowrap;
+    transition:color 0.15s ease, background 0.15s ease;
+  }
+  .day-nav a:hover{color:var(--ink);}
+  .day-nav a.active{background:var(--ink); color:var(--paper);}
+  .day-nav .sep{
+    flex:0 0 1px;
+    height:16px;
+    background:var(--rule);
+    margin:0 6px;
+  }
+
+  /* ---------- SCROLL REVEAL + HOVER LIFT ---------- */
+  .js .reveal{
+    opacity:0;
+    transform:translateY(16px);
+    transition:opacity 0.55s ease, transform 0.55s ease;
+  }
+  .js .reveal.in{opacity:1; transform:translateY(0);}
+  @media (prefers-reduced-motion: reduce){
+    .js .reveal{opacity:1; transform:none;}
+  }
+  .anchor-card, .adv-card{transition:transform 0.18s ease, box-shadow 0.18s ease;}
+  .anchor-card:hover, .adv-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 8px 20px rgba(43,40,35,0.09);
   }
 
   /* ---------- OPEN QUESTIONS ---------- */
@@ -514,6 +599,20 @@
   </div>
 </header>
 
+<nav class="day-nav" id="day-nav" aria-label="Itinerary">
+  <div class="day-nav-inner mono">
+    <a href="#day-thu">Thu</a>
+    <a href="#day-fri">Fri</a>
+    <a href="#day-sat">Sat</a>
+    <a href="#day-sun">Sun</a>
+    <a href="#day-mon">Mon</a>
+    <a href="#day-tue">Tue</a>
+    <span class="sep" aria-hidden="true"></span>
+    <a href="#open-questions">Question</a>
+    <a href="#adventures">Extras</a>
+  </div>
+</nav>
+
 <main class="wrap">
 
   <section class="intro">
@@ -521,7 +620,7 @@
     <p>This isn't a tourist itinerary — it's six days of actual terrain: a ballgame, a coastline, a neighborhood art walk, and enough open road in between to just be here. Erik, welcome back. Kristin, welcome to the West Coast for the first time — let's cover some ground.</p>
     <div class="collage">
       <figure class="collage-a">
-        <img src="https://images.unsplash.com/photo-1575369422538-94d6e04c2571?w=700&q=80" alt="Alki Beach, West Seattle">
+        <img src="https://images.unsplash.com/photo-1779261691617-76bfea4b185a?w=700&q=80" alt="Alki Beach, West Seattle">
         <figcaption>Alki Beach</figcaption>
       </figure>
       <figure>
@@ -537,37 +636,37 @@
       <h2>What's already locked in</h2>
     </div>
     <div class="anchors-grid">
-      <div class="anchor-card">
+      <div class="anchor-card reveal">
         <span class="anchor-icon">⚾</span>
         <h3>Mariners Game</h3>
         <div class="anchor-when mono">Thu · First pitch 1:10 PM</div>
         <p>Straight off the plane and into the stands at T-Mobile Park.</p>
       </div>
-      <div class="anchor-card">
+      <div class="anchor-card reveal">
         <span class="anchor-icon">🔮</span>
         <h3>Chihuly Garden &amp; Glass</h3>
         <div class="anchor-when mono">Fri · Daytime</div>
         <p>Dale Chihuly's glass collection near the Space Needle. Erik's call — Kristin has to see it.</p>
       </div>
-      <div class="anchor-card">
+      <div class="anchor-card reveal">
         <span class="anchor-icon">🎨</span>
         <h3>Highland Park First Friday</h3>
         <div class="anchor-when mono">Fri · ~5:30–8:30 PM</div>
         <p>The neighborhood art walk. Kyle's actual backyard, on its best night of the month.</p>
       </div>
-      <div class="anchor-card">
+      <div class="anchor-card reveal">
         <span class="anchor-icon">🥾</span>
         <h3>Toleak Point Backpacking</h3>
         <div class="anchor-when mono">Sun–Mon · Overnight</div>
         <p>Third Beach to Toleak Point. Boots on, phones off, Olympic coast wilderness.</p>
       </div>
-      <div class="anchor-card">
+      <div class="anchor-card reveal">
         <span class="anchor-icon">🎳</span>
         <h3>Unlimited Free Bowling</h3>
         <div class="anchor-when mono">Any day · Not after 5 PM Fri/Sat</div>
         <p>West Seattle Bowl perk — free and unlimited, so it's basically a Monday activity.</p>
       </div>
-      <div class="anchor-card">
+      <div class="anchor-card reveal">
         <span class="anchor-icon">⛵</span>
         <h3>Sailing, Puget Sound</h3>
         <div class="anchor-when mono">Sat · Afternoon</div>
@@ -593,8 +692,10 @@
       <div class="legend-item"><span class="legend-dot" style="background:var(--muted-grey)"></span>Departure</div>
     </div>
 
+    <div class="trail">
+
     <!-- THURSDAY -->
-    <details class="day" data-terrain="landmark" open>
+    <details class="day reveal" data-terrain="landmark" id="day-thu" open>
       <summary>
         <div class="waypoint mono">Thu · Aug 6<span class="waypoint-num">01</span></div>
         <div class="day-heading">
@@ -602,8 +703,10 @@
           <div class="day-sub">Straight off the plane and into the stands.</div>
           <span class="terrain-tag">Landmark</span>
         </div>
+        <svg class="contour" viewBox="0 0 70 44" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1"><path d="M8,34 C4,24 10,10 24,8 C40,6 62,10 64,20 C66,30 52,38 36,38 C24,38 11,42 8,34 Z"/><path d="M16,30 C13,23 18,14 27,13 C38,11 54,14 55,21 C56,28 46,32 34,32 C26,32 18,35 16,30 Z"/><path d="M24,26 C23,22 26,18 31,17 C38,16 46,18 46,22 C46,26 40,27 34,27 C30,27 25,29 24,26 Z"/></g></svg>
       </summary>
       <div class="day-body">
+        <img class="day-photo" src="https://images.unsplash.com/photo-1728034867728-e30b21c535bb?w=800&q=80" alt="T-Mobile Park from the stands" loading="lazy">
         <ul>
           <li><span class="day-time mono">11:29 AM</span> Land at SEA — bags, car, quick turnaround</li>
           <li><span class="day-time mono">1:10 PM</span> Mariners game, T-Mobile Park <span class="status-pill status-confirmed">Confirmed</span></li>
@@ -613,7 +716,7 @@
     </details>
 
     <!-- FRIDAY -->
-    <details class="day" data-terrain="urban">
+    <details class="day reveal" data-terrain="urban" id="day-fri">
       <summary>
         <div class="waypoint mono">Fri · Aug 7<span class="waypoint-num">02</span></div>
         <div class="day-heading">
@@ -621,8 +724,10 @@
           <div class="day-sub">A hand with setup, then glass — Highland Park by night.</div>
           <span class="terrain-tag">Urban</span>
         </div>
+        <svg class="contour" viewBox="0 0 70 44" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1"><path d="M8,34 C4,24 10,10 24,8 C40,6 62,10 64,20 C66,30 52,38 36,38 C24,38 11,42 8,34 Z"/><path d="M16,30 C13,23 18,14 27,13 C38,11 54,14 55,21 C56,28 46,32 34,32 C26,32 18,35 16,30 Z"/><path d="M24,26 C23,22 26,18 31,17 C38,16 46,18 46,22 C46,26 40,27 34,27 C30,27 25,29 24,26 Z"/></g></svg>
       </summary>
       <div class="day-body">
+        <img class="day-photo" src="https://images.unsplash.com/photo-1676919244904-94c530c6e3dc?w=800&q=80" alt="Chihuly blown glass, up close" loading="lazy">
         <ul>
           <li><span class="day-time mono">Morning</span> First Friday site setup, ~1 hour <span class="status-pill status-confirmed">Confirmed</span></li>
           <li><span class="day-time mono">Daytime</span> Chihuly Garden &amp; Glass <span class="status-pill status-confirmed">Confirmed</span></li>
@@ -633,7 +738,7 @@
     </details>
 
     <!-- SATURDAY -->
-    <details class="day" data-terrain="water">
+    <details class="day reveal" data-terrain="water" id="day-sat">
       <summary>
         <div class="waypoint mono">Sat · Aug 8<span class="waypoint-num">03</span></div>
         <div class="day-heading">
@@ -641,8 +746,10 @@
           <div class="day-sub">All three — garden party, concert, and sailing.</div>
           <span class="terrain-tag">Water</span>
         </div>
+        <svg class="contour" viewBox="0 0 70 44" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1"><path d="M8,34 C4,24 10,10 24,8 C40,6 62,10 64,20 C66,30 52,38 36,38 C24,38 11,42 8,34 Z"/><path d="M16,30 C13,23 18,14 27,13 C38,11 54,14 55,21 C56,28 46,32 34,32 C26,32 18,35 16,30 Z"/><path d="M24,26 C23,22 26,18 31,17 C38,16 46,18 46,22 C46,26 40,27 34,27 C30,27 25,29 24,26 Z"/></g></svg>
       </summary>
       <div class="day-body">
+        <img class="day-photo" src="https://images.unsplash.com/photo-1676877530434-8a819bd22da4?w=800&q=80" alt="Sailboat on Puget Sound with Mount Rainier behind" loading="lazy">
         <ul>
           <li><span class="day-time mono">~1 PM</span> AJ's garden party <span class="status-pill status-confirmed">Confirmed</span></li>
           <li><span class="day-time mono">~2 PM</span> Beef's Prime Cuts concert <span class="status-pill status-confirmed">Confirmed</span></li>
@@ -654,7 +761,7 @@
     </details>
 
     <!-- SUNDAY -->
-    <details class="day" data-terrain="wilderness">
+    <details class="day reveal" data-terrain="wilderness" id="day-sun">
       <summary>
         <div class="waypoint mono">Sun · Aug 9<span class="waypoint-num">04</span></div>
         <div class="day-heading">
@@ -662,8 +769,10 @@
           <div class="day-sub">Olympic coast. Boots on, phones off.</div>
           <span class="terrain-tag">Wilderness</span>
         </div>
+        <svg class="contour" viewBox="0 0 70 44" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1"><path d="M8,34 C4,24 10,10 24,8 C40,6 62,10 64,20 C66,30 52,38 36,38 C24,38 11,42 8,34 Z"/><path d="M16,30 C13,23 18,14 27,13 C38,11 54,14 55,21 C56,28 46,32 34,32 C26,32 18,35 16,30 Z"/><path d="M24,26 C23,22 26,18 31,17 C38,16 46,18 46,22 C46,26 40,27 34,27 C30,27 25,29 24,26 Z"/></g></svg>
       </summary>
       <div class="day-body">
+        <img class="day-photo" src="https://images.unsplash.com/photo-1703359464254-c674cfbef020?w=800&q=80" alt="Sea stacks in fog on the Olympic coast" loading="lazy">
         <ul>
           <li><span class="day-time mono">Morning</span> Drive to Third Beach trailhead</li>
           <li><span class="day-time mono">Daytime</span> Hike in, make camp at Toleak Point <span class="status-pill status-confirmed">Confirmed</span></li>
@@ -674,7 +783,7 @@
     </details>
 
     <!-- MONDAY -->
-    <details class="day" data-terrain="basecamp">
+    <details class="day reveal" data-terrain="basecamp" id="day-mon">
       <summary>
         <div class="waypoint mono">Mon · Aug 10<span class="waypoint-num">05</span></div>
         <div class="day-heading">
@@ -682,8 +791,10 @@
           <div class="day-sub">Sore legs, then the landscape architect.</div>
           <span class="terrain-tag">Basecamp</span>
         </div>
+        <svg class="contour" viewBox="0 0 70 44" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1"><path d="M8,34 C4,24 10,10 24,8 C40,6 62,10 64,20 C66,30 52,38 36,38 C24,38 11,42 8,34 Z"/><path d="M16,30 C13,23 18,14 27,13 C38,11 54,14 55,21 C56,28 46,32 34,32 C26,32 18,35 16,30 Z"/><path d="M24,26 C23,22 26,18 31,17 C38,16 46,18 46,22 C46,26 40,27 34,27 C30,27 25,29 24,26 Z"/></g></svg>
       </summary>
       <div class="day-body">
+        <img class="day-photo" src="https://images.unsplash.com/photo-1564327367919-cb377ea6a88f?w=800&q=80" alt="Coffee and cake on a cafe table" loading="lazy">
         <ul>
           <li><span class="day-time mono">Midday</span> Hike out, drive back to West Seattle</li>
           <li><span class="day-time mono">Before 4</span> Open, deliberately low-key — free bowling could fit if there's time</li>
@@ -694,7 +805,7 @@
     </details>
 
     <!-- TUESDAY -->
-    <details class="day" data-terrain="departure">
+    <details class="day reveal" data-terrain="departure" id="day-tue">
       <summary>
         <div class="waypoint mono">Tue · Aug 11<span class="waypoint-num">06</span></div>
         <div class="day-heading">
@@ -702,14 +813,18 @@
           <div class="day-sub">One more coffee, then the airport.</div>
           <span class="terrain-tag">Departure</span>
         </div>
+        <svg class="contour" viewBox="0 0 70 44" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1"><path d="M8,34 C4,24 10,10 24,8 C40,6 62,10 64,20 C66,30 52,38 36,38 C24,38 11,42 8,34 Z"/><path d="M16,30 C13,23 18,14 27,13 C38,11 54,14 55,21 C56,28 46,32 34,32 C26,32 18,35 16,30 Z"/><path d="M24,26 C23,22 26,18 31,17 C38,16 46,18 46,22 C46,26 40,27 34,27 C30,27 25,29 24,26 Z"/></g></svg>
       </summary>
       <div class="day-body">
+        <img class="day-photo" src="https://images.unsplash.com/photo-1507812984078-917a274065be?w=800&q=80" alt="Airplane wing at sunset from the window seat" loading="lazy">
         <ul>
           <li><span class="day-time mono">Morning</span> Coffee, slow, no rush</li>
           <li><span class="day-time mono">11:45 AM</span> Depart SEA <span class="status-pill status-confirmed">Confirmed</span></li>
         </ul>
       </div>
     </details>
+
+    </div>
   </section>
 
   <hr class="rule">
@@ -721,7 +836,7 @@
       <p style="color:var(--ink-soft); margin-top:10px;">Everything else is sorted. This one's genuinely up to you.</p>
     </div>
 
-    <div class="question-card">
+    <div class="question-card reveal">
       <h3>Saturday evening, after sailing — what sounds good?</h3>
       <div class="options" data-question="saturday-evening">
         <button class="opt-btn" data-option="Dinner party at the house"><span class="opt-label">🍽️ Dinner party at the house</span><span class="opt-count mono">0</span></button>
@@ -754,7 +869,7 @@
 
     <div class="adv-grid" id="adv-grid">
 
-      <div class="adv-card" data-tags="outdoor active">
+      <div class="adv-card reveal" data-tags="outdoor active">
         <div class="adv-top"><span class="adv-icon">🥏</span></div>
         <h4>Disc Golf, Lakewood</h4>
         <p>A classic with Kyle's brother. King County's got the course.</p>
@@ -762,7 +877,7 @@
         <button class="add-btn">+ Add to shortlist</button>
       </div>
 
-      <div class="adv-card" data-tags="indoor mellow">
+      <div class="adv-card reveal" data-tags="indoor mellow">
         <div class="adv-top"><span class="adv-icon">🎳</span></div>
         <h4>Bowling, West Seattle Bowl</h4>
         <p>Free and unlimited on the Kyle plan. Monday's the natural fit.</p>
@@ -770,7 +885,7 @@
         <button class="add-btn">+ Add to shortlist</button>
       </div>
 
-      <div class="adv-card" data-tags="indoor active">
+      <div class="adv-card reveal" data-tags="indoor active">
         <div class="adv-top"><span class="adv-icon">⛸️</span></div>
         <h4>Roller Skating, Southgate</h4>
         <p>Five minutes from home. Laces optional, dignity optional.</p>
@@ -778,7 +893,7 @@
         <button class="add-btn">+ Add to shortlist</button>
       </div>
 
-      <div class="adv-card" data-tags="outdoor mellow">
+      <div class="adv-card reveal" data-tags="outdoor mellow">
         <div class="adv-top"><span class="adv-icon">🏖️</span></div>
         <h4>Alki Beach Walk</h4>
         <p>Where Logan's place is, and where the city meets the Sound.</p>
@@ -786,7 +901,7 @@
         <button class="add-btn">+ Add to shortlist</button>
       </div>
 
-      <div class="adv-card" data-tags="outdoor mellow">
+      <div class="adv-card reveal" data-tags="outdoor mellow">
         <div class="adv-top"><span class="adv-icon">🌲</span></div>
         <h4>Lincoln Park</h4>
         <p>West Seattle's best-kept secret — bluff, forest, beach, ten minutes out.</p>
@@ -794,7 +909,7 @@
         <button class="add-btn">+ Add to shortlist</button>
       </div>
 
-      <div class="adv-card" data-tags="food mellow">
+      <div class="adv-card reveal" data-tags="food mellow">
         <div class="adv-top"><span class="adv-icon">☕</span></div>
         <h4>Coffee Crawl</h4>
         <p>Seattle's coffee culture, done properly — a few real stops, no chains.</p>
@@ -802,7 +917,7 @@
         <button class="add-btn">+ Add to shortlist</button>
       </div>
 
-      <div class="adv-card" data-tags="indoor food mellow">
+      <div class="adv-card reveal" data-tags="indoor food mellow">
         <div class="adv-top"><span class="adv-icon">🍽️</span></div>
         <h4>Dinner Party at the House</h4>
         <p>The renovated kitchen, put to use. No fixed night — whenever it fits.</p>
@@ -810,7 +925,7 @@
         <button class="add-btn">+ Add to shortlist</button>
       </div>
 
-      <div class="adv-card" data-tags="indoor active food">
+      <div class="adv-card reveal" data-tags="indoor active food">
         <div class="adv-top"><span class="adv-icon">🎤</span></div>
         <h4>Karaoke, Ba Bar or Elsewhere</h4>
         <p>West Seattle's got options — this one's flexible on venue.</p>
@@ -818,7 +933,7 @@
         <button class="add-btn">+ Add to shortlist</button>
       </div>
 
-      <div class="adv-card" data-tags="indoor mellow food">
+      <div class="adv-card reveal" data-tags="indoor mellow food">
         <div class="adv-top"><span class="adv-icon">🎱</span></div>
         <h4>Pool at Triangle</h4>
         <p>West Seattle dive bar classic. Low-key, no pressure.</p>
@@ -826,7 +941,7 @@
         <button class="add-btn">+ Add to shortlist</button>
       </div>
 
-      <div class="adv-card" data-tags="outdoor active">
+      <div class="adv-card reveal" data-tags="outdoor active">
         <div class="adv-top"><span class="adv-icon">🏄</span></div>
         <h4>Paddleboarding</h4>
         <p>Puget Sound from a different angle. Weather- and energy-dependent.</p>
@@ -847,6 +962,49 @@
 </footer>
 
 <script>
+  // ---------- SCROLL REVEAL + STICKY NAV ----------
+  (function(){
+    document.body.classList.add('js');
+
+    const revealEls = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const ro = new IntersectionObserver((entries) => {
+        entries.forEach(en => {
+          if (en.isIntersecting) {
+            en.target.classList.add('in');
+            ro.unobserve(en.target);
+          }
+        });
+      }, {rootMargin:'0px 0px -8% 0px'});
+      revealEls.forEach(el => ro.observe(el));
+    } else {
+      revealEls.forEach(el => el.classList.add('in'));
+    }
+
+    const nav = document.getElementById('day-nav');
+    const links = Array.from(nav.querySelectorAll('a'));
+
+    nav.addEventListener('click', (e) => {
+      const a = e.target.closest('a');
+      if (!a) return;
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target && target.tagName === 'DETAILS') target.open = true;
+    });
+
+    const byId = {};
+    links.forEach(a => byId[a.getAttribute('href').slice(1)] = a);
+    const targets = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+    const so = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) {
+          links.forEach(l => l.classList.remove('active'));
+          byId[en.target.id].classList.add('active');
+        }
+      });
+    }, {rootMargin:'-15% 0px -70% 0px'});
+    targets.forEach(t => so.observe(t));
+  })();
+
   // ---------- LIVE WEATHER (Seattle) ----------
   (function(){
     const el = document.getElementById('weather-line');
