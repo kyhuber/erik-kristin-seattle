@@ -1074,13 +1074,15 @@
     navLinks.forEach(a => linkById[a.getAttribute('href').slice(1)] = a);
 
     let currentDay = (days.find(d => d.open) || days[0]).id;
+    const landedOnDay = location.hash.indexOf('#day-') === 0 && days.some(d => '#' + d.id === location.hash);
+    if (landedOnDay) currentDay = location.hash.slice(1);
 
     function highlightNav(id){
       navLinks.forEach(l => l.classList.remove('active'));
       if (linkById[id]) linkById[id].classList.add('active');
     }
 
-    function setDay(id, scrollTo){
+    function setDay(id, scrollTo, updateHash){
       currentDay = id;
       days.forEach(d => {
         const on = d.id === id;
@@ -1098,15 +1100,16 @@
         (prev ? '<button class="pager-btn" data-target="' + prev.id + '">&larr; ' + prev.querySelector('h3').textContent + '</button>' : '<span></span>') +
         (next ? '<button class="pager-btn" data-target="' + next.id + '">' + next.querySelector('h3').textContent + ' &rarr;</button>' : '<span></span>');
       highlightNav(id);
+      if (updateHash && history.replaceState) history.replaceState(null, '', '#' + id);
       if (scrollTo) document.getElementById('week').scrollIntoView({behavior:'smooth'});
     }
 
     // tab mode shows one day at a time; skip the reveal animation for days
     days.forEach(d => d.classList.add('in'));
-    tabs.forEach(t => t.addEventListener('click', () => setDay(t.dataset.target, false)));
+    tabs.forEach(t => t.addEventListener('click', () => setDay(t.dataset.target, false, true)));
     pager.addEventListener('click', (e) => {
       const b = e.target.closest('.pager-btn');
-      if (b) setDay(b.dataset.target, false);
+      if (b) setDay(b.dataset.target, false, true);
     });
     nav.addEventListener('click', (e) => {
       const a = e.target.closest('a');
@@ -1114,10 +1117,18 @@
       const id = a.getAttribute('href').slice(1);
       if (id.indexOf('day-') === 0) {
         e.preventDefault();
-        setDay(id, true);
+        setDay(id, true, true);
       }
     });
-    setDay(currentDay, false);
+    setDay(currentDay, false, false);
+    if (landedOnDay) {
+      // the day was hidden when the browser tried to honor the hash, so scroll now
+      document.getElementById('week').scrollIntoView({behavior:'instant', block:'start'});
+    } else {
+      // landed on a non-day hash (e.g. #open-questions): highlight that, not the day
+      const h = location.hash.slice(1);
+      if (h && linkById[h]) highlightNav(h);
+    }
 
     // section spy: track which stretch of the page is in view
     const spyMap = {
