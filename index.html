@@ -156,6 +156,10 @@
     line-height:1.4;
     margin-bottom:24px;
   }
+  .week-thesis{
+    margin:16px 0 0;
+    max-width:34ch;
+  }
   .intro p{
     font-size:1.08rem;
     color:var(--ink-soft);
@@ -201,30 +205,6 @@
     border:0;
     margin:0;
   }
-
-  /* ---------- ANCHORS ---------- */
-  .anchors-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(210px,1fr));
-    gap:18px;
-  }
-  .anchor-card{
-    background:var(--paper-dim);
-    border:1px solid var(--rule);
-    border-radius:3px;
-    padding:22px;
-  }
-  .anchor-icon{font-size:1.6rem; margin-bottom:12px; display:block;}
-  .anchor-card h3{font-size:1.05rem; margin-bottom:6px;}
-  .anchor-when{
-    font-family:'JetBrains Mono', monospace;
-    font-size:11px;
-    letter-spacing:0.05em;
-    text-transform:uppercase;
-    color:var(--ink-faint);
-    margin-bottom:10px;
-  }
-  .anchor-card p{margin:0; font-size:0.95rem; color:var(--ink-soft);}
 
   /* ---------- DAYS / TERRAIN LEGEND ---------- */
   .legend{
@@ -505,8 +485,8 @@
   @media (prefers-reduced-motion: reduce){
     .js .reveal{opacity:1; transform:none;}
   }
-  .anchor-card, .adv-card{transition:transform 0.18s ease, box-shadow 0.18s ease;}
-  .anchor-card:hover, .adv-card:hover{
+  .adv-card{transition:transform 0.18s ease, box-shadow 0.18s ease;}
+  .adv-card:hover{
     transform:translateY(-3px);
     box-shadow:0 8px 20px rgba(43,40,35,0.09);
   }
@@ -689,7 +669,6 @@
 <main class="wrap">
 
   <section class="intro">
-    <p class="intro-thesis">"You've heard about it for years. Now you get to see it."</p>
     <p>This isn't a tourist itinerary — it's six days of actual terrain: a ballgame, a coastline, a neighborhood art walk, and enough open road in between to just be here. Erik, welcome back. Kristin, welcome to the West Coast for the first time — let's cover some ground.</p>
     <div class="collage">
       <figure class="collage-a">
@@ -703,57 +682,11 @@
     </div>
   </section>
 
-  <section class="section" id="anchors">
-    <div class="section-head">
-      <div class="section-eyebrow mono">The anchors</div>
-      <h2>What's already locked in</h2>
-    </div>
-    <div class="anchors-grid">
-      <div class="anchor-card reveal">
-        <span class="anchor-icon">⚾</span>
-        <h3>Mariners Game</h3>
-        <div class="anchor-when mono">Thu · First pitch 1:10 PM</div>
-        <p>Straight off the plane and into the stands at T-Mobile Park.</p>
-      </div>
-      <div class="anchor-card reveal">
-        <span class="anchor-icon">🔮</span>
-        <h3>Chihuly Garden &amp; Glass</h3>
-        <div class="anchor-when mono">Fri · Daytime</div>
-        <p>Dale Chihuly's glass collection near the Space Needle. Erik's call — Kristin has to see it.</p>
-      </div>
-      <div class="anchor-card reveal">
-        <span class="anchor-icon">🎨</span>
-        <h3>Highland Park First Friday</h3>
-        <div class="anchor-when mono">Fri · ~5:30–8:30 PM</div>
-        <p>The neighborhood art walk. Kyle's actual backyard, on its best night of the month.</p>
-      </div>
-      <div class="anchor-card reveal">
-        <span class="anchor-icon">🥾</span>
-        <h3>Toleak Point Backpacking</h3>
-        <div class="anchor-when mono">Sun–Mon · Overnight</div>
-        <p>Third Beach to Toleak Point. Boots on, phones off, Olympic coast wilderness.</p>
-      </div>
-      <div class="anchor-card reveal">
-        <span class="anchor-icon">🎳</span>
-        <h3>Unlimited Free Bowling</h3>
-        <div class="anchor-when mono">Any day · Not after 5 PM Fri/Sat</div>
-        <p>West Seattle Bowl perk — free and unlimited, so it's basically a Monday activity.</p>
-      </div>
-      <div class="anchor-card reveal">
-        <span class="anchor-icon">⛵</span>
-        <h3>Sailing, Puget Sound</h3>
-        <div class="anchor-when mono">Sat · Afternoon</div>
-        <p>Part of a packed Saturday — garden party, concert, then out on the water.</p>
-      </div>
-    </div>
-  </section>
-
-  <hr class="rule">
-
   <section class="section" id="week">
     <div class="section-head">
       <div class="section-eyebrow mono">Day by day</div>
       <h2>The Week, by Terrain</h2>
+      <p class="intro-thesis week-thesis">"You've heard about it for years. Now you get to see it."</p>
     </div>
 
     <div class="legend">
@@ -964,7 +897,7 @@
       <div class="adv-card reveal" data-tags="indoor mellow">
         <div class="adv-top"><span class="adv-icon">🎳</span></div>
         <h4>Bowling, West Seattle Bowl</h4>
-        <p>Free and unlimited on the Kyle plan. Monday's the natural fit.</p>
+        <p>Free and unlimited on the Kyle plan — any day, but not after 5 PM Fri/Sat. Monday's the natural fit.</p>
         <div class="adv-tags"><span class="tag">Indoor</span><span class="tag">Mellow</span></div>
         <button class="add-btn">+ Add to shortlist</button>
       </div>
